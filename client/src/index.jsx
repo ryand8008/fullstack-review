@@ -17,21 +17,19 @@ class App extends React.Component {
   search (term) {
     console.log(`${term} was searched`);
     // TODO
+
     console.log();
     $.ajax({
       method: "POST",
       url: '/repos',
-      data: JSON.stringify({"term": term}),
-      contentType: 'application/json; charset=urf-8'
-
-    })
-
-    .done(function(msg) {
-      console.log(`${msg} sent!`)
-    })
-
-    .fail(function(textStatus) {
-      console.log(`Request failed: ${textStatus}`);
+      data: JSON.stringify({'username': term}),
+      contentType: 'application/json',
+      success: (data) => {
+        this.setState({repos: data})
+      },
+      error: (err) => {
+        console.log('FAILED')
+      }
     })
   }
 
